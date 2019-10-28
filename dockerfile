@@ -40,6 +40,7 @@ RUN set -ex && \
     tar -xf ideaIC-2019.2.3-no-jbr.tar.gz && \
     rm ideaIC-2019.2.3-no-jbr.tar.gz
 
+USER intellij
 
 # Define working directory.
 WORKDIR /root
