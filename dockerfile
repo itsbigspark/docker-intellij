@@ -16,8 +16,8 @@ ENV JAVA_VERSION_MAJOR=8 \
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 
-RUN groupadd -g ${GROUP_ID} pycharm &&\
-		useradd -l -u ${USER_ID} -g pycharm pycharm  
+RUN groupadd -g ${GROUP_ID} intellij &&\
+		useradd -l -u ${USER_ID} -g intellij intellij  
 
 RUN yum update -y && \
     yum install -y wget && \
