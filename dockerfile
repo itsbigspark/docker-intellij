@@ -1,10 +1,3 @@
-# Alpine 3.8 C++/Java Developer Image
-#
-# For IntelliJ and GUI (X11), run the image with:
-# $ XSOCK=/tmp/.X11-unix && sudo docker run -i -v $XSOCK:$XSOCK --volume="$HOME/.Xauthority:/root/.Xauthority:rw" -e DISPLAY -u developer -t [image-name]
-#
-# Then run IntelliJ with:
-# /idea-IC-191.6707.61/bin/idea.sh
 
 FROM centos:7 
 
@@ -13,16 +6,11 @@ ENV JAVA_VERSION_MAJOR=8 \
     JAVA_VERSION_BUILD=01 \
     JAVA_URL_HASH=090f390dda5b47b9b721c7dfaa008135
 
-ARG USER_ID=1000
-ARG GROUP_ID=1000
 
-RUN groupadd -g ${GROUP_ID} intellij &&\
-		useradd -l -u ${USER_ID} -g intellij intellij  
-
-RUN yum update -y && \
-    yum install -y wget && \
+RUN yum install -y wget && \
     yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel git && \
     yum install -y xeyes && \
+    yum install -y krb5-workstation && \
     yum clean all
 
 # Set environment variables.
@@ -40,7 +28,13 @@ RUN set -ex && \
     tar -xf ideaIC-2019.2.3-no-jbr.tar.gz && \
     rm ideaIC-2019.2.3-no-jbr.tar.gz
 
-USER intellij
+RUN yum install -y xauth xlist
+
+#ARG USER_ID=1000
+#ARG GROUP_ID=1000
+
+#RUN groupadd -g ${GROUP_ID} intellij && useradd -l -u ${USER_ID} -g intellij intellij
+#USER intellij
 
 # Define working directory.
 WORKDIR /root
